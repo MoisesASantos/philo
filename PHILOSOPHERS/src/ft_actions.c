@@ -14,26 +14,46 @@
 
 void	ft_take_forks(t_philo *philo)
 {
-	if (philo->ID % 2 == 0 && ft_is_running(philo->data))
+	if (philo->ID % 2 == 0)
 	{
 		pthread_mutex_lock(philo->right_fork);
+		if (!ft_is_running(philo->data))
+		{
+			pthread_mutex_unlock(philo->right_fork);
+			return ;
+		}
 		ft_print_status(philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
+		if (!ft_is_running(philo->data))
+		{
+			pthread_mutex_unlock(philo->left_fork);
+			pthread_mutex_unlock(philo->right_fork);
+			return ;
+		}
 		ft_print_status(philo, "has taken a fork");
 	}
-	else if (philo->ID % 2 != 2 && ft_is_running(philo->data))
+	else
 	{
 		pthread_mutex_lock(philo->left_fork);
+		if (!ft_is_running(philo->data))
+		{
+			pthread_mutex_unlock(philo->left_fork);
+			return ;
+		}
 		ft_print_status(philo, "has taken a fork");
 		pthread_mutex_lock(philo->right_fork);
+		if (!ft_is_running(philo->data))
+		{
+			pthread_mutex_unlock(philo->right_fork);
+			pthread_mutex_unlock(philo->left_fork);
+			return ;
+		}
 		ft_print_status(philo, "has taken a fork");
 	}
 }
 
 void	ft_realese_fork(t_philo *philo)
 {
-	if (!ft_is_running(philo->data))
-		return ;
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 }
@@ -63,5 +83,6 @@ void	ft_thinking(t_philo *philo)
 	if (!ft_is_running(philo->data))
 		return ;
 	ft_print_status(philo, "is thinking");
-	ft_usleep(philo->data->time_to_think);
+	if (philo->data->time_to_think > 0)
+		ft_usleep(philo->data->time_to_think);
 }

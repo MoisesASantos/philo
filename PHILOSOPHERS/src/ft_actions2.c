@@ -17,11 +17,13 @@ void	ft_print_status(t_philo *philo, const char *str)
 	size_t	time;
 
 	pthread_mutex_lock(&philo->data->print_mutex);
-	if (ft_is_running(philo->data))
+	pthread_mutex_lock(&philo->data->stop_mutex);
+	if (philo->data->stop == 0)
 	{
 		time = get_time() - philo->data->start_time;
 		printf("%zu %d %s\n", time, philo->ID, str);
 	}
+	pthread_mutex_unlock(&philo->data->stop_mutex);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
