@@ -1,0 +1,39 @@
+Parsing
+
+Ao ter o toda linha retornada com o readline(), devemos aplicar um split nessa linha, com isso se haver aspas duplas ou simples considerar como palavra áte encontrar os fechamentos.
+
+Exemplo: echo "   Santos "
+
+matriz[0] = echo;
+matriz[1] = "   Santos "
+
+Uma vez feito isso, se a primeria posição for um comando inválido, então devemos retornar erro imediatamente.
+
+exemplo: | echo "santos";
+exemplo: >> echo "santos";
+exemplo: > echo "santos";
+
+matriz[0] = | ; return (Syntax Errada);
+
+Devemos Tratar casos de quotes não fechadas.
+
+Exemplo: echo "santos
+Exemplo: echo 'santos
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+PIPE
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+REDIRECT
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+EXPAND
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Execute
+
+ENV
+------------------------------
+BUILD-IN
+------------------------------
+SIGNALS
+----------------------------
